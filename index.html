@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografía Interactiva - UDL en Educación Inclusiva</title>
+    <style>
+        /* =========================================
+           ESTILOS GLOBALES Y TIPOGRAFÍA
+           ========================================= */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            line-height: 1.6;
+            /* Espaciado exterior para airear la infografía (Mobile First) */
+            padding: 2rem 1rem;
+        }
+
+        /* =========================================
+           CONTENEDOR PRINCIPAL
+           ========================================= */
+        .infografia-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 2.5rem 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(31, 58, 95, 0.1);
+        }
+
+        /* =========================================
+           ESTRUCTURA DE LA LISTA
+           ========================================= */
+        .lista-interactiva {
+            list-style: none;
+        }
+
+        .item-lista {
+            /* Estructura de dos columnas usando Flexbox */
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            
+            /* Área táctil generosa para móviles (mínimo 48px recomendado) */
+            padding: 1.5rem 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            
+            /* Transición base para todos los elementos */
+            transition: all 0.4s ease-in-out;
+            border: 1px solid transparent;
+        }
+
+        /* Efecto sutil al pasar el cursor sobre toda la fila */
+        .item-lista:hover {
+            background-color: #f8fbff;
+            border-color: #A7C7E7;
+            box-shadow: 0 4px 15px rgba(46, 139, 192, 0.1);
+        }
+
+        /* =========================================
+           EFECTO PRINCIPAL: SEMICÍRCULOS DEL ÍCONO (#18)
+           ========================================= */
+        .icono-contenedor {
+            /* Dimensiones del círculo */
+            position: relative;
+            width: 60px;
+            height: 60px;
+            min-width: 60px; /* Evita que flexbox lo encoja */
+            border-radius: 50%;
+            background-color: #eef5fb; /* Color de base muy suave */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            overflow: hidden; /* Oculta lo que sobresale al rotar */
+            z-index: 1;
+            transition: all 0.4s ease-in-out;
+        }
+
+        /* Semicírculo base (siempre visible) */
+        .icono-contenedor::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #A7C7E7; /* Azul claro */
+            border-radius: 50%;
+            z-index: -1;
+            transition: all 0.4s ease-in-out;
+        }
+
+        /* Semicírculo animado (completa el círculo al hacer hover) */
+        .icono-contenedor::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #2E8BC0; /* Azul medio */
+            border-radius: 50%;
+            z-index: -1;
+            /* INICIALIZACIÓN: Ocultamos la mitad rotándolo -90 grados */
+            transform: rotate(-90deg);
+            opacity: 0.85;
+            /* 
+             DIDÁCTICA: Para cambiar la velocidad de la rotación, modifica 
+             el valor de 'transition' abajo. Ejemplo: '0.8s' lo hace más lento. 
+            */
+            transition: all 0.4s ease-in-out;
+        }
+
+        /* Disparador del efecto sobre el ítem padre */
+        .item-lista:hover .icono-contenedor::after {
+            /* ANIMACIÓN: Rota a 0 grados para descubrir el semicírculo */
+            transform: rotate(0deg);
+        }
+
+        /* Escala del emoji para dar sensación de rebote */
+        .item-lista:hover .icono-contenedor {
+            transform: scale(1.1);
+        }
+
+        /* =========================================
+           BLOQUE DE TEXTO Y LÍNEA ONDULADA (#24)
+           ========================================= */
+        .texto-contenedor {
+            flex: 1;
+            padding-top: 0.5rem; /* Alinea visualmente con el centro del ícono */
+        }
+
+        .titulo-item {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1F3A5F; /* Azul profundo */
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+            /* Preparación para la línea ondulada */
+            padding-bottom: 8px;
+            background-repeat: repeat-x;
+            background-position: 200% 100%; /* Empieza fuera del eje X a la derecha */
+            background-size: 200% 8px;
+            /* 
+             DIDÁCTICA: Aquí está el SVG en base64. 
+             Para cambiar el color de la onda, reemplaza este string base64 
+             por el de otra imagen SVG con el color deseado. 
+             Actualmente es un azul #2E8BC0 con un 30% de opacidad.
+            */
+            background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxMDAgMTAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxwYXRoIGQ9Ik0wIDUgQzIwIDAgNDAgMTAgNjAgNSBDODAgMCAxMDAgMTAgMTIwIDUiIHN0cm9rZT0iIzJFOEJDMCIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBvcGFjaXR5PSIwLjMiLz48L3N2Zz4=");
+            /* Solución cross-browser para la onda */
+            background-clip: padding-box;
+            -webkit-background-clip: padding-box;
+            transition: color 0.3s ease;
+        }
+
+        .item-lista:hover .titulo-item {
+            /* Animación de desplazamiento de la onda al hacer hover */
+            animation: moverOnda 1.5s linear infinite;
+            background-position: 0% 100%; /* Se mueve hacia la izquierda */
+        }
+
+        /* Definición de la animación de la onda */
+        @keyframes moverOnda {
+            0% { background-position: 100% 100%; }
+            100% { background-position: 0% 100%; }
+        }
+
+        .descripcion-item {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        /* =========================================
+           PIE DE PÁGINA (FOOTER)
+           ========================================= */
+        .pie-pagina {
+            max-width: 900px;
+            margin: 3rem auto 0;
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #1F3A5F;
+            border-top: 2px solid #A7C7E7;
+            background-color: #ffffff;
+            border-radius: 0 0 16px 16px;
+            box-shadow: 0 5px 20px rgba(31, 58, 95, 0.05);
+        }
+
+        .pie-pagina a {
+            color: #2E8BC0;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .pie-pagina a:hover {
+            text-decoration: underline;
+            color: #1F3A5F;
+        }
+
+        /* =========================================
+           RESPONSIVE DESIGN (Tablets y Desktop)
+           ========================================= */
+        @media (min-width: 768px) {
+            body {
+                padding: 4rem 2rem;
+            }
+
+            .infografia-container {
+                padding: 4rem;
+            }
+
+            .item-lista {
+                padding: 2rem;
+                gap: 2rem;
+            }
+
+            .icono-contenedor {
+                width: 75px;
+                height: 75px;
+                min-width: 75px;
+                font-size: 2rem;
+            }
+
+            .titulo-item {
+                font-size: 1.5rem;
+            }
+            
+            .descripcion-item {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+<link type="text/css" rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+    <main class="infografia-container">
+        <!-- Lista semántica estructurada en dos columnas internas -->
+        <ul class="lista-interactiva">
+            
+            <li class="item-lista">
+                <div class="icono-contenedor">🎯</div>
+                <div class="texto-contenedor">
+                    <h2 class="titulo-item">UDL como base de la inclusión</h2>
+                    <p class="descripcion-item">El Diseño Universal para el Aprendizaje (UDL) permite adaptar contenidos, métodos y evaluaciones a diferentes necesidades, eliminando barreras y haciendo la enseñanza de informática accesible para todos los estudiantes.</p>
+                </div>
+            </li>
+
+            <li class="item-lista">
+                <div class="icono-contenedor">📈</div>
+                <div class="texto-contenedor">
+                    <h2 class="titulo-item">Mejora significativa del aprendizaje</h2>
+                    <p class="descripcion-item">Tras aplicar UDL durante 8 semanas, los estudiantes mejoraron notablemente sus resultados en programación, evidenciando que este enfoque tiene un impacto positivo real en el rendimiento académico.</p>
+                </div>
+            </li>
+
+            <li class="item-lista">
+                <div class="icono-contenedor">🔄</div>
+                <div class="texto-contenedor">
+                    <h2 class="titulo-item">Método progresivo UMC (Use–Modify–Create)</h2>
+                    <p class="descripcion-item">El aprendizaje se estructura en tres niveles: usar, modificar y crear. Este proceso facilita la comprensión gradual del código y promueve autonomía y pensamiento computacional.</p>
+                </div>
+            </li>
+
+            <li class="item-lista">
+                <div class="icono-contenedor">🧠</div>
+                <div class="texto-contenedor">
+                    <h2 class="titulo-item">Desarrollo integral de habilidades</h2>
+                    <p class="descripcion-item">El uso de UDL no solo mejora la programación, sino también habilidades clave como la lógica, la creatividad y la integración de conocimientos de otras áreas.</p>
+                </div>
+            </li>
+
+            <li class="item-lista">
+                <div class="icono-contenedor">⚠️</div>
+                <div class="texto-contenedor">
+                    <h2 class="titulo-item">Retos en la implementación</h2>
+                    <p class="descripcion-item">Los estudiantes presentan dificultades como dependencia del docente y problemas de concentración, lo que evidencia la necesidad de acompañamiento pedagógico constante al aplicar UDL.</p>
+                </div>
+            </li>
+
+        </ul>
+    </main>
+
+    <!-- Pie de página obligatorio -->
+    <footer class="pie-pagina">
+        <p>Fuente: Making Computer Science Accessible through Universal Design for Learning in Inclusive Education – DOI: <a href="https://doi.org/10.3991/ijep.v14i5.48811" target="_blank">https://doi.org/10.3991/ijep.v14i5.48811</a> <br>Diseñado por: Jheremy Atarama</p>
+    </footer>
+
+<script type="text/javascript" src="js/script.js"></script>
+</body>
+</html>
